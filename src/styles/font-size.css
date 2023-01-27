@@ -1,0 +1,9 @@
+* {
+  --text-smallest: 13px;
+  --text-small: 15px;
+  --text-medium: 16px;
+  --text-large: 18px;
+  --text-larger: 23px;
+  --text-extra-large: 36px;
+  --text-extra-extra-large: 52px;
+}
