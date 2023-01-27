@@ -1,5 +1,5 @@
 export const ActiveCategory = {
-  HotCoffee: 'HotCoffee',
-  IcedCoffee: 'IcedCoffee',
-  Deserts: 'Deserts'
+  HotCoffee: 'hot-coffee',
+  IcedCoffee: 'iced-coffee',
+  Desserts: 'desserts'
 };

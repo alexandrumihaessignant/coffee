@@ -1,11 +1,12 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 
-import BackButton from '../../support/BackButton';
-
-import * as SInput from '../../../../atoms/Input.style';
-
-import * as SButtonWrapper from '../../../../atoms/Button.style';
 import * as SMain from './Create.style';
+import * as SInput from '../../../atoms/Input.style';
+import * as SButtonWrapper from '../../../atoms/Button.style';
+import BackButton from "../support/BackButton";
+import {AppContext} from "../../../../services/AppContext";
+import {ActiveCategory} from "../../../../constants/ActiveCategory";
+import {useNavigate, useParams} from "react-router-dom";
 
 const S = {
   ItemCreateForm: SMain.ItemCreateForm,
@@ -14,7 +15,14 @@ const S = {
   ButtonWrapper: SButtonWrapper.ButtonWrapper
 };
 
-function Create(props) {
+function Create() {
+
+  const {appCtx, setAppCtx} = useContext(AppContext);
+  const nav = useNavigate();
+  let {category} = useParams();
+
+  const activeCategory = category || ActiveCategory.HotCoffee;
+  const itemsFromCategory = appCtx.items[activeCategory];
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -27,12 +35,16 @@ function Create(props) {
     setDescription(event.target.value);
   }
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    props.updateItems({
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let tempContext = {...appCtx};
+    tempContext.items[category].push({
       title: name,
+      imgSrc: null,
       description: description
-    })
+    });
+    setAppCtx(tempContext);
+    nav("/"+ category);
   }
 
   return (
@@ -46,7 +58,7 @@ function Create(props) {
                  placeholder='Description'
                  onChange={onChangeDescription}/>
         <S.Buttons>
-          <BackButton updateActiveView={props.updateActiveView}/>
+          <BackButton/>
           <S.ButtonWrapper>
             <input type='submit'
                    value='Create'/>
