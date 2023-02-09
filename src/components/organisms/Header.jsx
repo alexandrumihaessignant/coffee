@@ -4,9 +4,9 @@ import * as S from './Header.style';
 
 function Header() {
   return (
-    <S.Header>
-      <Logo></Logo>
-    </S.Header>
+      <S.Header>
+        <Logo></Logo>
+      </S.Header>
   );
 }
 

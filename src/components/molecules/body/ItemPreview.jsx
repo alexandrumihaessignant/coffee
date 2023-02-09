@@ -14,10 +14,12 @@ const ItemPreview = (props) => {
               <S.Content>
                 <img src={props.imgSrc}/>
                 <div>
-                  <p>Ingredients:</p>
-                  <p>Ice, Milk, Coffee Frappuccino Syrup [Sugar, Water, Natural
-                    Flavor, Salt, Xanthan Gum, Potassium Sorbate, Citric Acid],
-                    Coffee, Brewed Espresso.</p>
+                  <p>Description:</p>
+                  <p>{
+                    props.description !== undefined
+                        ? props.description
+                        : `No description has been found.`
+                  }</p>
                 </div>
               </S.Content>
             </S.Preview>

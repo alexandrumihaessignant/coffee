@@ -11,6 +11,7 @@ const ItemList = (props) => {
                 <Item key={item.title}
                       title={item.title}
                       imgSrc={item.imgSrc}
+                      description={item.description}
                       updateActiveView={props.updateActiveView}></Item>
             ))}
           </S.ItemList>

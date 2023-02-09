@@ -10,11 +10,11 @@ import * as S from './App.style';
 
 function App() {
   return (
-    <S.App>
-      <Header></Header>
-      <Nav></Nav>
-      <Body></Body>
-    </S.App>
+      <S.App>
+        <Header></Header>
+        <Nav></Nav>
+        <Body></Body>
+      </S.App>
   );
 }
 

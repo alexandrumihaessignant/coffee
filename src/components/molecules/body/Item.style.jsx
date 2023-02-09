@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Item = styled.li`
-  margin: 0 1rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +16,7 @@ export const Item = styled.li`
 
     opacity: .88;
   }
-  
+
   button {
     margin-top: 18px;
   }

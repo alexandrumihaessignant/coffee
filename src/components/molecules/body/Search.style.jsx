@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Search = styled.div`
   grid-area: search;
   height: 70px;
