@@ -11,7 +11,8 @@ const Item = (props) => {
     props.updateActiveView({
       activeView: ActiveView.Preview,
       previewTitle: props.title,
-      previewImgSrc: props.imgSrc
+      previewImgSrc: props.imgSrc,
+      previewDescription: props.description
     });
   }
 

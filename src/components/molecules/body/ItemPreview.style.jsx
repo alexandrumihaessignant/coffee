@@ -33,9 +33,10 @@ export const Content = styled.div`
   margin-top: 24px;
   
   display: flex;
+  flex-direction: column;
 
   img {
-    width: 50%;
+    width: 100%;
     height: 500px;
 
     object-fit: cover;
@@ -45,8 +46,8 @@ export const Content = styled.div`
   }
   
   div {
-    width: 50%;
-    margin-left: 24px;
+    width: 100%;
+    margin-top: 12px;
     
     p {
       color: var(--primary-darker);

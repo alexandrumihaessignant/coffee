@@ -8,7 +8,8 @@ const ItemPreviewBackButton = (props) => {
     props.updateActiveView({
       activeView: ActiveView.List,
       previewTitle: null,
-      previewImgSrc: null
+      previewImgSrc: null,
+      previewDescription: null
     });
   }
 

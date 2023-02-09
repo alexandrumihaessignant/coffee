@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
 export const ItemList = styled.ul`
-  width: 100%;
   padding-left: 0;
+  margin: 0;
 
-  display: flex;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 225px);
   justify-content: center;
-  align-items: center;
+  grid-gap: 1rem;
 `
