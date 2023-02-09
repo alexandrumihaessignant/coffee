@@ -31,7 +31,7 @@ export const Preview = styled.div`
 
 export const Content = styled.div`
   margin-top: 24px;
-  
+
   display: flex;
   flex-direction: column;
 
@@ -44,20 +44,20 @@ export const Content = styled.div`
 
     opacity: .88;
   }
-  
+
   div {
     width: 100%;
     margin-top: 12px;
-    
+
     p {
       color: var(--primary-darker);
     }
-    
+
     p:first-child {
       font-size: var(--text-medium);
       font-weight: bold;
     }
-    
+
     p:nth-child(2) {
       margin-top: 12px;
 

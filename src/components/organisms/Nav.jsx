@@ -4,9 +4,9 @@ import * as S from './Nav.style';
 
 function Nav() {
   return (
-    <S.Nav>
-      <PagesLinks/>
-    </S.Nav>
+      <S.Nav>
+        <PagesLinks/>
+      </S.Nav>
   );
 }
 
