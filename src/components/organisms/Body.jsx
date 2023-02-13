@@ -3,61 +3,67 @@ import {Component} from 'react';
 import Search from './../molecules/body/Search';
 import ItemList from './../molecules/body/ItemList';
 import ItemPreview from './../molecules/body/ItemPreview';
-import CreateItemButton from "../molecules/body/CreateItemButton.jsx";
+import CreateItemButton from '../molecules/body/CreateItemButton.jsx';
+
+import {ActiveView} from '../../constants/ActiveView';
+import {Endpoints} from '../../constants/Endpoints';
+import {LocalData} from '../../constants/LocalData';
 
 import * as S from './Body.style';
 
-export const ActiveView = {
-  List: 'List',
-  Preview: 'Preview',
-  Create: 'Create',
-}
-
-const hotCoffeeEndpoint = 'https://api.sampleapis.com/coffee/hot';
-const icedCoffeeEndpoint = 'https://api.sampleapis.com/coffee/iced';
+const knownInvalidTitles = ['rem', 'Founder'];
 
 class Body extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      activeCategory: props.activeCategory,
       activeView: ActiveView.List,
       previewTitle: null,
       previewImgSrc: null,
       previewDescription: null,
-      items: [
-        {
-          title: 'Iced Coffee',
-          imgSrc: require('./../../assets/iced-coffee.jpg')
-        },
-        {
-          title: 'Iced Latte',
-          imgSrc: require('./../../assets/iced-latte.jpg')
-        },
-        {
-          title: 'Frappuccino',
-          imgSrc: require('./../../assets/frappuccino.jpg')
-        },
-        {
-          title: 'Cold Brew',
-          imgSrc: require('./../../assets/cold-brew.jpg')
-        },
-        {
-          title: 'Nitro',
-          imgSrc: require('./../../assets/nitro.jpg')
-        }
-      ],
+      activeItems: [],
+      items: {
+        HotCoffee: [],
+        IcedCoffee: LocalData.icedCoffee,
+        Deserts: []
+      },
+      itemsAlreadyFetched: {
+        HotCoffee: false,
+        IcedCoffee: false,
+        Deserts: false,
+      },
       isFetching: false
     };
+
     this.fetchItems = this.fetchItems.bind(this);
-    this.updateExistingItems = this.updateExistingItems.bind(this);
-    this.computeUniqueItems = this.computeUniqueItems.bind(this);
   }
 
   componentDidMount() {
-    this.fetchItems(hotCoffeeEndpoint, icedCoffeeEndpoint).then(newItems => {
-      this.updateExistingItems(newItems)
-    });
+    this.initializeFirstCategory(this.state.activeCategory);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const category = this.props.activeCategory;
+    console.log(`Body: Component did update [category=${category}]`);
+    if (prevProps.activeCategory !== category) {
+      let activeEndpoint = Endpoints[category];
+      if (this.state.itemsAlreadyFetched[category]) {
+        console.log(`Body: Items already fetched. Just changing the active items list [category=${category}]\n\n`);
+        this.setState({
+          activeCategory: category,
+          activeItems: this.state.items[category]
+        });
+      } else {
+        console.log(`Body: Fetching items [category=${category}]\n\n`);
+        this.fetchItems(activeEndpoint).then(newItems => {
+          this.updateExistingItems(newItems);
+        });
+      }
+    } else {
+      console.log(`Body: The previous category is the same as the actual one. Skipping the change of active items [category=${category}]\n\n`);
+    }
   }
 
   handleUpdateActiveView = (itemListData) => {
@@ -65,11 +71,19 @@ class Body extends Component {
       activeView: itemListData.activeView,
       previewTitle: itemListData.previewTitle,
       previewImgSrc: itemListData.previewImgSrc,
-      previewDescription: itemListData.previewDescription
     });
   };
 
-  async fetchItems(...endpoints) {
+  initializeFirstCategory = (category) => {
+    console.log(`Body: Initialize first category. Fetching items [category=${category}]\n\n`);
+    let activeEndpoint = Endpoints[category];
+    this.fetchItems(activeEndpoint).then(newItems => {
+      this.updateExistingItems(newItems);
+    });
+  }
+
+  fetchItems = async (...endpoints) => {
+    const category = this.props.activeCategory;
     this.setState({
       isFetching: true
     });
@@ -77,30 +91,37 @@ class Body extends Component {
     for (const endpoint of endpoints) {
       const response = await fetch(endpoint);
       const json = await response.json();
-      const someNewItems = json.map(coffee => {
-        return {
-          title: coffee.title,
-          imgSrc: coffee.image,
-          description: coffee.description
-        }
-      });
+      let someNewItems = [];
+      someNewItems = Mapper[category](json);
       newItems = newItems.concat(someNewItems);
     }
     return newItems;
   }
 
-  updateExistingItems(newItems) {
+  updateExistingItems = (newItems) => {
+    const category = this.props.activeCategory;
+    const computedItems = this.computeUniqueItems(
+        this.state.items[category],
+        newItems);
+    let items = {...this.state.items};
+    let itemsAlreadyFetched = {...this.state.itemsAlreadyFetched};
+    items[category] = computedItems;
+    itemsAlreadyFetched[category] = true;
     this.setState({
-      isFetching: false,
-      items: this.computeUniqueItems(newItems)
+      activeCategory: category,
+      items,
+      itemsAlreadyFetched,
+      activeItems: computedItems,
+      isFetching: false
     });
   }
 
-  computeUniqueItems(newItems) {
-    const items = this.state.items.concat(newItems);
+  computeUniqueItems = (existingItems, newItems) => {
+    const items = existingItems.concat(newItems);
     for (let i = 0; i < items.length; ++i) {
       for (let j = i + 1; j < items.length; ++j) {
-        if (items[i].title === items[j].title) {
+        if (items[i].title === items[j].title
+            || knownInvalidTitles.includes(items[j].title)) {
           items.splice(j--, 1);
         }
       }
@@ -115,10 +136,11 @@ class Body extends Component {
               display={this.state.activeView === ActiveView.List}/>
           <S.ItemListWrapper>
             <ItemList
+                activeCategory={this.state.activeCategory}
                 display={this.state.activeView === ActiveView.List}
                 activeView={this.state.activeView}
                 updateActiveView={this.handleUpdateActiveView}
-                items={this.state.items}>
+                items={this.state.activeItems}>
             </ItemList>
           </S.ItemListWrapper>
           <S.CreateButtonWrapper>
@@ -130,12 +152,41 @@ class Body extends Component {
               display={this.state.activeView === ActiveView.Preview}
               title={this.state.previewTitle}
               imgSrc={this.state.previewImgSrc}
-              description={this.state.previewDescription}
               updateActiveView={this.handleUpdateActiveView}>
           </ItemPreview>
         </S.Body>
     );
   }
 }
+
+const Mapper = {
+  HotCoffee: (json) => {
+    return json.map(item => {
+      return {
+        title: item.title,
+        imgSrc: item.image,
+        description: item.description
+      }
+    });
+  },
+  IcedCoffee: (json) => {
+    return json.map(item => {
+      return {
+        title: item.title,
+        imgSrc: item.image,
+        description: item.description
+      }
+    });
+  },
+  Deserts: (json) => {
+    return json.cakes.map(item => {
+      return {
+        title: item.title,
+        imgSrc: item.image,
+        description: item.previewDescription
+      }
+    });
+  }
+};
 
 export default Body;

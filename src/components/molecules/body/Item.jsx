@@ -1,6 +1,6 @@
-import {ActiveView} from "../../organisms/Body";
-
 import Button from './../../atoms/Button';
+
+import {ActiveView} from '../../../constants/ActiveView';
 
 import * as S from './Item.style';
 

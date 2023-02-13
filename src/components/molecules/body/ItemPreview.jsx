@@ -1,5 +1,5 @@
 import ItemPreviewBackButton from './ItemPreviewBackButton';
-import Button from "../../atoms/Button";
+import Button from '../../atoms/Button';
 
 import * as S from './ItemPreview.style';
 

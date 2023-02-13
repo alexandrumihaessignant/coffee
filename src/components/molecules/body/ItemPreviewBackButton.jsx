@@ -1,5 +1,6 @@
 import Button from './../../atoms/Button';
-import {ActiveView} from '../../organisms/Body';
+
+import {ActiveView} from '../../../constants/ActiveView';
 
 const ItemPreviewBackButton = (props) => {
 
