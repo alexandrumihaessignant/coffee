@@ -1,3 +1,5 @@
+import {Component} from 'react';
+
 import * as SInput from '../../../../atoms/Input.style';
 import * as SButtonWrapper from '../../../../atoms/Button.style';
 
@@ -9,22 +11,52 @@ const S = {
   ButtonWrapper: SButtonWrapper.ButtonWrapper
 };
 
-const Create = () => {
+class Create extends Component {
 
-  return (
-      <S.ItemCreateForm>
-        <S.Input type='text'
-                      name='name'
-                      placeholder='Name'/>
-        <S.Input type='text'
-                      name='description'
-                      placeholder='Description'/>
-        <S.ButtonWrapper>
-          <input type='submit'
-                 value='Create'/>
-        </S.ButtonWrapper>
-      </S.ItemCreateForm>
-  );
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
+
+  handleNameChange = (event) => {
+    this.setState({
+      name: event.target.value
+    });
+  }
+
+  handleDescriptionChange = (event) => {
+    this.setState({
+      description: event.target.value
+    });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.props.updateActiveView({
+      title: this.state.name,
+      description: this.state.description
+    })
+  }
+
+  render() {
+    return (
+        <S.ItemCreateForm onSubmit={this.handleSubmit}>
+          <S.Input type='text'
+                   name='name'
+                   placeholder='Name'
+                   onChange={this.handleNameChange}/>
+          <S.Input type='text'
+                   name='description'
+                   placeholder='Description'
+                   onChange={this.handleDescriptionChange}/>
+          <S.ButtonWrapper>
+            <input type='submit'
+                   value='Create'/>
+          </S.ButtonWrapper>
+        </S.ItemCreateForm>
+    );
+  }
 }
 
 export default Create;
