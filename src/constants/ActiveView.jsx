@@ -1,5 +1,5 @@
 export const ActiveView = {
-  List: 'List',
+  Grid: 'List',
   Preview: 'Preview',
   Create: 'Create',
 };
