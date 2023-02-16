@@ -2,6 +2,8 @@ import Button from './../../atoms/Button';
 
 import {ActiveView} from '../../../constants/ActiveView';
 
+import * as S from './CreateItemButton.style';
+
 const CreateItemButton = (props) => {
 
   const onClick = (event) => {
@@ -15,8 +17,10 @@ const CreateItemButton = (props) => {
 
   return (
       props.display ?
-          <Button onClick={onClick}
-                  title={'Create'}/>
+          <S.Wrapper>
+            <Button onClick={onClick}
+                    title={'Create'}/>
+          </S.Wrapper>
           : null
   );
 }

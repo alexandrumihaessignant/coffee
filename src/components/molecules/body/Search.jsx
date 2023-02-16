@@ -1,5 +1,6 @@
 import {Component} from 'react';
 
+import * as SInput from './../../atoms/Input.style';
 import * as S from './Search.style';
 
 class Search extends Component {
@@ -14,7 +15,7 @@ class Search extends Component {
     if (display) {
       html = <S.Search>
         <form>
-          <input placeholder='Search by name'/>
+          <SInput.Input placeholder='Search by name'/>
         </form>
       </S.Search>
     }
