@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
-export const ItemList = styled.ul`
+export const Wrapper = styled.div`
+  max-width: 1280px;
+  width: 100%;
+  min-width: 225px;
+
+  display: flex;
+  justify-content: center;
+`
+
+export const Grid = styled.ul`
   padding-left: 0;
   margin: 0;
 

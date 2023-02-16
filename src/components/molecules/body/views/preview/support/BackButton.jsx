@@ -1,13 +1,13 @@
-import Button from './../../atoms/Button';
+import Button from '../../../../../atoms/Button';
 
-import {ActiveView} from '../../../constants/ActiveView';
+import {ActiveView} from '../../../../../../constants/ActiveView';
 
-const ItemPreviewBackButton = (props) => {
+const BackButton = (props) => {
 
   const onClick = (event) => {
     event.preventDefault();
     props.updateActiveView({
-      activeView: ActiveView.List,
+      activeView: ActiveView.Grid,
       previewTitle: null,
       previewImgSrc: null,
       previewDescription: null
@@ -20,4 +20,4 @@ const ItemPreviewBackButton = (props) => {
   );
 }
 
-export default ItemPreviewBackButton;
+export default BackButton;

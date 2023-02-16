@@ -1,16 +1,14 @@
 import {Component} from 'react';
 
-import Search from './../molecules/body/Search';
-import ItemList from './../molecules/body/ItemList';
-import ItemPreview from './../molecules/body/ItemPreview';
-import CreateItemButton from '../molecules/body/CreateItemButton.jsx';
+import GridView from '../molecules/body/views/GridView';
+import PreviewView from '../molecules/body/views/PreviewView';
+import CreateView from '../molecules/body/views/CreateView';
 
 import {ActiveView} from '../../constants/ActiveView';
 import {Endpoints} from '../../constants/Endpoints';
 import {LocalData} from '../../constants/LocalData';
 
 import * as S from './Body.style';
-import ItemCreate from "../molecules/body/ItemCreate";
 
 const knownInvalidTitles = ['rem', 'Founder'];
 
@@ -20,7 +18,7 @@ class Body extends Component {
     super(props);
     this.state = {
       activeCategory: props.activeCategory,
-      activeView: ActiveView.List,
+      activeView: ActiveView.Grid,
       previewTitle: null,
       previewImgSrc: null,
       previewDescription: null,
@@ -88,7 +86,7 @@ class Body extends Component {
         }
     );
     this.setState({
-      activeView: ActiveView.List,
+      activeView: ActiveView.Grid,
       items,
       activeItems: items,
     });
@@ -153,32 +151,17 @@ class Body extends Component {
   render() {
     return (
         <S.Body>
-          <Search
-              display={this.state.activeView === ActiveView.List}/>
-          <S.ItemListWrapper>
-            <ItemList
-                activeCategory={this.state.activeCategory}
-                display={this.state.activeView === ActiveView.List}
-                activeView={this.state.activeView}
-                updateActiveView={this.handleUpdateActiveView}
-                items={this.state.activeItems}>
-            </ItemList>
-          </S.ItemListWrapper>
-          <CreateItemButton
-              display={this.state.activeView === ActiveView.List}
-              updateActiveView={this.handleUpdateActiveView}/>
-          <ItemPreview
-              display={this.state.activeView === ActiveView.Preview}
-              title={this.state.previewTitle}
-              imgSrc={this.state.previewImgSrc}
-              updateActiveView={this.handleUpdateActiveView}>
-          </ItemPreview>
-          <ItemCreate
-              display={this.state.activeView === ActiveView.Create}
-              title={this.state.previewTitle}
-              imgSrc={this.state.previewImgSrc}
-              updateActiveView={this.handleUpdateActiveView}>
-          </ItemCreate>
+          <GridView display={this.state.activeView === ActiveView.Grid}
+                    activeView={this.state.activeView}
+                    items={this.state.activeItems}
+                    updateActiveView={this.handleUpdateActiveView}/>
+          <PreviewView display={this.state.activeView === ActiveView.Preview}
+                       title={this.state.previewTitle}
+                       imgSrc={this.state.previewImgSrc}
+                       updateActiveView={this.handleUpdateActiveView}/>
+          <CreateView display={this.state.activeView === ActiveView.Create}
+                      updateActiveView={this.handleCreateItem}>
+          </CreateView>
         </S.Body>
     );
   }
