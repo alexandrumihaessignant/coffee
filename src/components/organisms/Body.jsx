@@ -93,6 +93,20 @@ class Body extends Component {
     });
   };
 
+  handleFilterGrid = (filterData) => {
+    const category = this.state.activeCategory;
+    let filteredItems = []
+    this.state.items[category].forEach(item => {
+      if(item.title.toLowerCase().includes(filterData.filterText.toLowerCase())) {
+        filteredItems.push(item);
+      }
+    });
+    this.setState({
+      activeItems: filteredItems,
+    });
+  };
+
+
   initializeFirstCategory = (category) => {
     console.log(
         `Body: Initialize first category. Fetching items [category=${category}]\n\n`);
@@ -155,7 +169,8 @@ class Body extends Component {
           <GridView display={this.state.activeView === ActiveView.Grid}
                     activeView={this.state.activeView}
                     items={this.state.activeItems}
-                    updateActiveView={this.handleUpdateActiveView}/>
+                    updateActiveView={this.handleUpdateActiveView}
+                    filterGrid={this.handleFilterGrid}/>
           <PreviewView display={this.state.activeView === ActiveView.Preview}
                        title={this.state.previewTitle}
                        description={this.state.previewDescription}
