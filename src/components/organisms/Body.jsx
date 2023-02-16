@@ -10,6 +10,7 @@ import {Endpoints} from '../../constants/Endpoints';
 import {LocalData} from '../../constants/LocalData';
 
 import * as S from './Body.style';
+import ItemCreate from "../molecules/body/ItemCreate";
 
 const knownInvalidTitles = ['rem', 'Founder'];
 
@@ -50,7 +51,8 @@ class Body extends Component {
     if (prevProps.activeCategory !== category) {
       let activeEndpoint = Endpoints[category];
       if (this.state.itemsAlreadyFetched[category]) {
-        console.log(`Body: Items already fetched. Just changing the active items list [category=${category}]\n\n`);
+        console.log(
+            `Body: Items already fetched. Just changing the active items list [category=${category}]\n\n`);
         this.setState({
           activeCategory: category,
           activeItems: this.state.items[category]
@@ -62,7 +64,8 @@ class Body extends Component {
         });
       }
     } else {
-      console.log(`Body: The previous category is the same as the actual one. Skipping the change of active items [category=${category}]\n\n`);
+      console.log(
+          `Body: The previous category is the same as the actual one. Skipping the change of active items [category=${category}]\n\n`);
     }
   }
 
@@ -74,8 +77,26 @@ class Body extends Component {
     });
   };
 
+  handleCreateItem = (createItemFormData) => {
+    const category = this.state.activeCategory;
+    let items = {...this.state.items};
+    items[category] = items[category].push(
+        {
+          title: createItemFormData.title,
+          imgSrc: null,
+          description: createItemFormData.description
+        }
+    );
+    this.setState({
+      activeView: ActiveView.List,
+      items,
+      activeItems: items,
+    });
+  };
+
   initializeFirstCategory = (category) => {
-    console.log(`Body: Initialize first category. Fetching items [category=${category}]\n\n`);
+    console.log(
+        `Body: Initialize first category. Fetching items [category=${category}]\n\n`);
     let activeEndpoint = Endpoints[category];
     this.fetchItems(activeEndpoint).then(newItems => {
       this.updateExistingItems(newItems);
@@ -143,17 +164,21 @@ class Body extends Component {
                 items={this.state.activeItems}>
             </ItemList>
           </S.ItemListWrapper>
-          <S.CreateButtonWrapper>
-            <CreateItemButton
-                display={this.state.activeView === ActiveView.List}
-                updateActiveView={this.handleUpdateActiveView}/>
-          </S.CreateButtonWrapper>
+          <CreateItemButton
+              display={this.state.activeView === ActiveView.List}
+              updateActiveView={this.handleUpdateActiveView}/>
           <ItemPreview
               display={this.state.activeView === ActiveView.Preview}
               title={this.state.previewTitle}
               imgSrc={this.state.previewImgSrc}
               updateActiveView={this.handleUpdateActiveView}>
           </ItemPreview>
+          <ItemCreate
+              display={this.state.activeView === ActiveView.Create}
+              title={this.state.previewTitle}
+              imgSrc={this.state.previewImgSrc}
+              updateActiveView={this.handleUpdateActiveView}>
+          </ItemCreate>
         </S.Body>
     );
   }
