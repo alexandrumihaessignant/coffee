@@ -71,6 +71,7 @@ class Body extends Component {
     this.setState({
       activeView: itemListData.activeView,
       previewTitle: itemListData.previewTitle,
+      previewDescription: itemListData.previewDescription,
       previewImgSrc: itemListData.previewImgSrc,
     });
   };
@@ -78,7 +79,7 @@ class Body extends Component {
   handleCreateItem = (createItemFormData) => {
     const category = this.state.activeCategory;
     let items = {...this.state.items};
-    items[category] = items[category].push(
+    items[category].push(
         {
           title: createItemFormData.title,
           imgSrc: null,
@@ -88,7 +89,7 @@ class Body extends Component {
     this.setState({
       activeView: ActiveView.Grid,
       items,
-      activeItems: items,
+      activeItems: items[category],
     });
   };
 
@@ -157,6 +158,7 @@ class Body extends Component {
                     updateActiveView={this.handleUpdateActiveView}/>
           <PreviewView display={this.state.activeView === ActiveView.Preview}
                        title={this.state.previewTitle}
+                       description={this.state.previewDescription}
                        imgSrc={this.state.previewImgSrc}
                        updateActiveView={this.handleUpdateActiveView}/>
           <CreateView display={this.state.activeView === ActiveView.Create}
