@@ -1,5 +1,3 @@
-import {Component} from 'react';
-
 import * as SInput from '../../../../atoms/Input.style';
 
 import * as SMain from './Search.style';
@@ -9,18 +7,22 @@ const S = {
   Input: SInput.Input
 };
 
-class Search extends Component {
-  constructor() {
-    super();
+const Search = (props) => {
+
+  const handleChange = (event) => {
+    props.filterGrid({
+      filterText: event.target.value
+    })
   }
 
-  render() {
-    return <S.Search>
-      <form>
-        <S.Input placeholder='Search by name'/>
-      </form>
-    </S.Search>;
-  }
+  return (
+      <S.Search>
+        <form>
+          <S.Input placeholder='Search by name'
+                   onChange={handleChange}/>
+        </form>
+      </S.Search>
+  );
 }
 
 export default Search;

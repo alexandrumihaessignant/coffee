@@ -7,7 +7,7 @@ const GridView = (props) => {
   return (
       props.display
           ? <>
-            <Search/>
+            <Search filterGrid={props.filterGrid}/>
             <Grid items={props.items}
                   updateActiveView={props.updateActiveView}/>
             <CreateButton updateActiveView={props.updateActiveView}/>
