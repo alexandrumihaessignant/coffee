@@ -1,6 +1,6 @@
 import * as S from './Logo.style';
 
-const Logo = () => {
+function Logo() {
   return (
       <S.LogoWrapper>
         <S.Logo/>

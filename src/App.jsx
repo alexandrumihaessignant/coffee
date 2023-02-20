@@ -2,7 +2,7 @@ import './styles/index.css';
 import './styles/color-palette.css';
 import './styles/font-size.css';
 
-import {Component} from 'react';
+import {useState} from 'react';
 
 import Header from './components/organisms/Header';
 import Nav from './components/organisms/Nav';
@@ -12,30 +12,22 @@ import {ActiveCategory} from './constants/ActiveCategory';
 
 import * as S from './App.style';
 
-class App extends Component {
+function App() {
 
-  constructor() {
-    super();
-    this.state = {
-      activeCategory: ActiveCategory.HotCoffee
-    };
-  }
+  const [activeCategory, setActiveCategory] = useState(ActiveCategory.HotCoffee);
 
-  handleUpdateActiveCategory = (data) => {
-    this.setState({
-      activeCategory: data.activeCategory
-    });
+  const handleUpdateActiveCategory = (data) => {
+    console.log(`App: Handling update active [category=${data.activeCategory}]`);
+    setActiveCategory(data.activeCategory);
   };
 
-  render() {
-    return (
-        <S.App>
-          <Header></Header>
-          <Nav updateActiveCategory={this.handleUpdateActiveCategory}></Nav>
-          <Body activeCategory={this.state.activeCategory}></Body>
-        </S.App>
-    );
-  }
+  return (
+      <S.App>
+        <Header></Header>
+        <Nav updateActiveCategory={handleUpdateActiveCategory}></Nav>
+        <Body activeCategory={activeCategory}></Body>
+      </S.App>
+  );
 }
 
 export default App;

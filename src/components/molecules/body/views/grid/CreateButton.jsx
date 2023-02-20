@@ -4,7 +4,7 @@ import {ActiveView} from '../../../../../constants/ActiveView';
 
 import * as S from './CreateButton.style';
 
-const CreateButton = (props) => {
+function CreateButton(props) {
 
   const onClick = (event) => {
     event.preventDefault();

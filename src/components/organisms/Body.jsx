@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useState, useEffect} from 'react';
 
 import GridView from '../molecules/body/views/GridView';
 import PreviewView from '../molecules/body/views/PreviewView';
@@ -10,147 +10,128 @@ import {LocalData} from '../../constants/LocalData';
 
 import * as S from './Body.style';
 
-const knownInvalidTitles = ['rem', 'Founder'];
+const knownInvalidTitles = ['rem', 'Founder', 'string'];
 
-class Body extends Component {
+function Body(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeCategory: props.activeCategory,
-      activeView: ActiveView.Grid,
-      previewTitle: null,
-      previewImgSrc: null,
-      previewDescription: null,
-      activeItems: [],
-      items: {
-        HotCoffee: [],
-        IcedCoffee: LocalData.icedCoffee,
-        Deserts: []
-      },
-      itemsAlreadyFetched: {
-        HotCoffee: false,
-        IcedCoffee: false,
-        Deserts: false,
-      },
-      isFetching: false
+  const [activeCategory, setActiveCategory] = useState(props.activeCategory);
+  const [activeView, setActiveView] = useState(ActiveView.Grid);
+  const [previewTitle, setPreviewTitle] = useState(null);
+  const [previewImgSrc, setPreviewImgSrc] = useState(null);
+  const [previewDescription, setPreviewDescription] = useState(null);
+  const [activeItems, setActiveItems] = useState([]);
+  const [items, setItems] = useState({
+    HotCoffee: [],
+    IcedCoffee: LocalData.icedCoffee,
+    Deserts: []
+  });
+  const [itemsAlreadyFetched, setItemsAlreadyFetched] = useState({
+    HotCoffee: false,
+    IcedCoffee: false,
+    Deserts: false
+  });
+  const [isFetching, setIsFetching] = useState(false);
+
+  useEffect(() => {
+    console.log('Body: Component did mount');
+
+    initializeFirstCategory(activeCategory);
+
+    return () => {
+      console.log("Body: Component will unmount\n");
     };
+  }, []);
 
-    this.fetchItems = this.fetchItems.bind(this);
-  }
+  useEffect(() => {
+    console.log(`Body: Component did update [category=${props.activeCategory}]`);
 
-  componentDidMount() {
-    this.initializeFirstCategory(this.state.activeCategory);
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const category = this.props.activeCategory;
-    console.log(`Body: Component did update [category=${category}]`);
-    if (prevProps.activeCategory !== category) {
-      let activeEndpoint = Endpoints[category];
-      if (this.state.itemsAlreadyFetched[category]) {
-        console.log(
-            `Body: Items already fetched. Just changing the active items list [category=${category}]\n\n`);
-        this.setState({
-          activeCategory: category,
-          activeItems: this.state.items[category]
-        });
-      } else {
-        console.log(`Body: Fetching items [category=${category}]\n\n`);
-        this.fetchItems(activeEndpoint).then(newItems => {
-          this.updateExistingItems(newItems);
-        });
-      }
+    let activeEndpoint = Endpoints[props.activeCategory];
+    if (itemsAlreadyFetched[props.activeCategory]) {
+      console.log(`Body: Items already fetched. Just changing the active items list [category=${props.activeCategory}]\n\n`);
+      setActiveCategory(props.activeCategory);
+      setActiveItems(items[props.activeCategory]);
     } else {
-      console.log(
-          `Body: The previous category is the same as the actual one. Skipping the change of active items [category=${category}]\n\n`);
+      console.log(`Body: Fetching items [category=${props.activeCategory}]\n\n`);
+      fetchItems(activeEndpoint).then(newItems => {
+        updateExistingItems(newItems);
+      });
     }
-  }
 
-  handleUpdateActiveView = (itemListData) => {
-    this.setState({
-      activeView: itemListData.activeView,
-      previewTitle: itemListData.previewTitle,
-      previewDescription: itemListData.previewDescription,
-      previewImgSrc: itemListData.previewImgSrc,
-    });
+    return () => {
+      console.log("Body: Component will unmount\n\n");
+    };
+  }, [props.activeCategory]);
+
+
+  const handleUpdateActiveView = (itemListData) => {
+    setActiveView(itemListData.activeView);
+    setPreviewTitle(itemListData.previewTitle);
+    setPreviewDescription(itemListData.previewDescription);
+    setPreviewImgSrc(itemListData.previewImgSrc);
   };
 
-  handleCreateItem = (createItemFormData) => {
-    const category = this.state.activeCategory;
-    let items = {...this.state.items};
-    items[category].push(
+  const handleCreateItem = (createItemFormData) => {
+    let tempItems = {...items};
+    tempItems[activeCategory].push(
         {
           title: createItemFormData.title,
           imgSrc: null,
           description: createItemFormData.description
         }
     );
-    this.setState({
-      activeView: ActiveView.Grid,
-      items,
-      activeItems: items[category],
-    });
+    setActiveView(ActiveView.Grid);
+    setItems(tempItems);
+    setActiveItems(items[activeCategory]);
   };
 
-  handleFilterGrid = (filterData) => {
-    const category = this.state.activeCategory;
-    let filteredItems = []
-    this.state.items[category].forEach(item => {
+  const handleFilterGrid = (filterData) => {
+    let filteredItems = [];
+    items[activeCategory].forEach(item => {
       if(item.title.toLowerCase().includes(filterData.filterText.toLowerCase())) {
         filteredItems.push(item);
       }
     });
-    this.setState({
-      activeItems: filteredItems,
-    });
+    setActiveItems(filteredItems);
   };
 
 
-  initializeFirstCategory = (category) => {
-    console.log(
-        `Body: Initialize first category. Fetching items [category=${category}]\n\n`);
+  const initializeFirstCategory = (category) => {
+    console.log(`Body: Initialize first category. Fetching items [category=${category}]\n\n`);
     let activeEndpoint = Endpoints[category];
-    this.fetchItems(activeEndpoint).then(newItems => {
-      this.updateExistingItems(newItems);
+    fetchItems(activeEndpoint).then(newItems => {
+      updateExistingItems(newItems);
     });
   }
 
-  fetchItems = async (...endpoints) => {
-    const category = this.props.activeCategory;
-    this.setState({
-      isFetching: true
-    });
+  const fetchItems = async (...endpoints) => {
+    setIsFetching(true);
     let newItems = [];
     for (const endpoint of endpoints) {
       const response = await fetch(endpoint);
       const json = await response.json();
       let someNewItems = [];
-      someNewItems = Mapper[category](json);
+      someNewItems = Mapper[props.activeCategory](json);
       newItems = newItems.concat(someNewItems);
     }
     return newItems;
   }
 
-  updateExistingItems = (newItems) => {
-    const category = this.props.activeCategory;
-    const computedItems = this.computeUniqueItems(
-        this.state.items[category],
-        newItems);
-    let items = {...this.state.items};
-    let itemsAlreadyFetched = {...this.state.itemsAlreadyFetched};
-    items[category] = computedItems;
-    itemsAlreadyFetched[category] = true;
-    this.setState({
-      activeCategory: category,
-      items,
-      itemsAlreadyFetched,
-      activeItems: computedItems,
-      isFetching: false
-    });
+  const updateExistingItems = (newItems) => {
+    const computedItems = computeUniqueItems(
+        items[props.activeCategory],
+        newItems
+    );
+    let tempItems = {...items};
+    let tempItemsAlreadyFetched = {...itemsAlreadyFetched};
+    tempItems[props.activeCategory] = computedItems;
+    tempItemsAlreadyFetched[props.activeCategory] = true;
+    setItems(tempItems);
+    setItemsAlreadyFetched(tempItemsAlreadyFetched);
+    setActiveItems(computedItems);
+    setIsFetching(false);
   }
 
-  computeUniqueItems = (existingItems, newItems) => {
+  const computeUniqueItems = (existingItems, newItems) => {
     const items = existingItems.concat(newItems);
     for (let i = 0; i < items.length; ++i) {
       for (let j = i + 1; j < items.length; ++j) {
@@ -163,25 +144,23 @@ class Body extends Component {
     return items;
   }
 
-  render() {
-    return (
-        <S.Body>
-          <GridView display={this.state.activeView === ActiveView.Grid}
-                    activeView={this.state.activeView}
-                    items={this.state.activeItems}
-                    updateActiveView={this.handleUpdateActiveView}
-                    filterGrid={this.handleFilterGrid}/>
-          <PreviewView display={this.state.activeView === ActiveView.Preview}
-                       title={this.state.previewTitle}
-                       description={this.state.previewDescription}
-                       imgSrc={this.state.previewImgSrc}
-                       updateActiveView={this.handleUpdateActiveView}/>
-          <CreateView display={this.state.activeView === ActiveView.Create}
-                      updateActiveView={this.handleCreateItem}>
-          </CreateView>
-        </S.Body>
-    );
-  }
+  return (
+      <S.Body>
+        <GridView display={activeView === ActiveView.Grid}
+                  activeView={activeView}
+                  items={activeItems}
+                  updateActiveView={handleUpdateActiveView}
+                  filterGrid={handleFilterGrid}/>
+        <PreviewView display={activeView === ActiveView.Preview}
+                     title={previewTitle}
+                     description={previewDescription}
+                     imgSrc={previewImgSrc}
+                     updateActiveView={handleUpdateActiveView}/>
+        <CreateView display={activeView === ActiveView.Create}
+                    updateActiveView={handleCreateItem}>
+        </CreateView>
+      </S.Body>
+  );
 }
 
 const Mapper = {

@@ -2,7 +2,7 @@ import Button from '../../../../../atoms/Button';
 
 import {ActiveView} from '../../../../../../constants/ActiveView';
 
-const BackButton = (props) => {
+function BackButton(props) {
 
   const onClick = (event) => {
     event.preventDefault();
