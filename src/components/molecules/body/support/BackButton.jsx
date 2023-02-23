@@ -1,6 +1,6 @@
-import Button from '../../../../../atoms/Button';
+import Button from '../../../atoms/Button';
 
-import {ActiveView} from '../../../../../../constants/ActiveView';
+import {ActiveView} from '../../../../constants/ActiveView';
 
 function BackButton(props) {
 

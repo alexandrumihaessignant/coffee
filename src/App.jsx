@@ -8,16 +8,24 @@ import Header from './components/organisms/Header';
 import Nav from './components/organisms/Nav';
 import Body from './components/organisms/Body';
 
+import {ActiveView} from './constants/ActiveView';
 import {ActiveCategory} from './constants/ActiveCategory';
 
 import * as S from './App.style';
 
 function App() {
 
+  const [activeView, setActiveView] = useState(ActiveView.Grid);
   const [activeCategory, setActiveCategory] = useState(ActiveCategory.HotCoffee);
 
+  const handleUpdateActiveView = (data) => {
+    console.log(`App: Handling update active view [activeView=${data.activeCategory}]`);
+    setActiveView(data.activeView);
+  };
+
   const handleUpdateActiveCategory = (data) => {
-    console.log(`App: Handling update active [category=${data.activeCategory}]`);
+    console.log(`App: Handling update active category [activeCategory=${data.activeCategory}]`);
+    setActiveView(ActiveView.Grid);
     setActiveCategory(data.activeCategory);
   };
 
@@ -25,7 +33,9 @@ function App() {
       <S.App>
         <Header></Header>
         <Nav updateActiveCategory={handleUpdateActiveCategory}></Nav>
-        <Body activeCategory={activeCategory}></Body>
+        <Body activeView={activeView}
+              activeCategory={activeCategory}
+              updateActiveView={handleUpdateActiveView}></Body>
       </S.App>
   );
 }

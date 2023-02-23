@@ -4,7 +4,8 @@ function CreateView(props) {
 
   return (
       props.display
-          ? <Create updateActiveView={props.updateActiveView}/>
+          ? <Create updateItems={props.updateItems}
+                    updateActiveView={props.updateActiveView}/>
           : null
   );
 }
