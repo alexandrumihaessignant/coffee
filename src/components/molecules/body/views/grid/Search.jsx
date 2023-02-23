@@ -9,7 +9,7 @@ const S = {
 
 function Search(props) {
 
-  const handleChange = (event) => {
+  const onChange = (event) => {
     props.filterGrid({
       filterText: event.target.value
     })
@@ -19,7 +19,7 @@ function Search(props) {
       <S.Search>
         <form>
           <S.Input placeholder='Search by name'
-                   onChange={handleChange}/>
+                   onChange={onChange}/>
         </form>
       </S.Search>
   );
