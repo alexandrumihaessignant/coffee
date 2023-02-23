@@ -16,15 +16,15 @@ function Create(props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleNameChange = (event) => {
+  const onChangeName = (event) => {
     setName(event.target.value);
   }
 
-  const handleDescriptionChange = (event) => {
+  const onChangeDescription = (event) => {
     setDescription(event.target.value);
   }
 
-  const handleSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     props.updateActiveView({
       title: name,
@@ -33,15 +33,15 @@ function Create(props) {
   }
 
   return (
-      <S.ItemCreateForm onSubmit={handleSubmit}>
+      <S.ItemCreateForm onSubmit={onSubmit}>
         <S.Input type='text'
                  name='name'
                  placeholder='Name'
-                 onChange={handleNameChange}/>
+                 onChange={onChangeName}/>
         <S.Input type='text'
                  name='description'
                  placeholder='Description'
-                 onChange={handleDescriptionChange}/>
+                 onChange={onChangeDescription}/>
         <S.ButtonWrapper>
           <input type='submit'
                  value='Create'/>
