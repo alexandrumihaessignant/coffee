@@ -56,7 +56,6 @@ function Body(props) {
     let activeEndpoint = Endpoints[props.activeCategory];
     if (itemsAlreadyFetched[props.activeCategory]) {
       console.log(`Body: Items already fetched. Just changing the active items list [category=${props.activeCategory}]\n\n`);
-      setActiveCategory(props.activeCategory);
       setActiveItems(items[props.activeCategory]);
     } else {
       console.log(`Body: Fetching items [category=${props.activeCategory}]\n\n`);
@@ -64,11 +63,13 @@ function Body(props) {
         updateActiveItems(newItems);
       });
     }
+    setActiveCategory(props.activeCategory);
+    setActiveView(props.activeView);
 
     return () => {
       console.log('Body: Component will unmount\n\n');
     };
-  }, [props.activeCategory]);
+  }, [props.activeCategory, props.activeView]);
 
   const updateActiveItems = (newItems) => {
     const computedItems = computeUniqueItems(
@@ -87,6 +88,9 @@ function Body(props) {
   }
 
   const handleUpdateActiveView = (itemListData) => {
+    props.updateActiveView({
+      activeView: itemListData.activeView
+    });
     setActiveView(itemListData.activeView);
     setPreviewTitle(itemListData.previewTitle);
     setPreviewDescription(itemListData.previewDescription);
@@ -130,7 +134,8 @@ function Body(props) {
                      imgSrc={previewImgSrc}
                      updateActiveView={handleUpdateActiveView}/>
         <CreateView display={activeView === ActiveView.Create}
-                    updateActiveView={handleCreateItem}>
+                    updateItems={handleCreateItem}
+                    updateActiveView={handleUpdateActiveView}>
         </CreateView>
       </S.Body>
   );

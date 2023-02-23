@@ -10,8 +10,7 @@ function GridView(props) {
 
   useEffect(() => {
     setItems(props.items)
-  }, [props.items]);
-
+  }, [props.items, props.activeView]);
 
   return (
       props.display

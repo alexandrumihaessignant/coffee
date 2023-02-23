@@ -1,12 +1,15 @@
 import {useState} from 'react';
 
-import * as SInput from '../../../../atoms/Input.style';
-import * as SButtonWrapper from '../../../../atoms/Button.style';
+import BackButton from '../../support/BackButton';
 
+import * as SInput from '../../../../atoms/Input.style';
+
+import * as SButtonWrapper from '../../../../atoms/Button.style';
 import * as SMain from './Create.style';
 
 const S = {
   ItemCreateForm: SMain.ItemCreateForm,
+  Buttons: SMain.Buttons,
   Input: SInput.Input,
   ButtonWrapper: SButtonWrapper.ButtonWrapper
 };
@@ -26,7 +29,7 @@ function Create(props) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    props.updateActiveView({
+    props.updateItems({
       title: name,
       description: description
     })
@@ -42,10 +45,13 @@ function Create(props) {
                  name='description'
                  placeholder='Description'
                  onChange={onChangeDescription}/>
-        <S.ButtonWrapper>
-          <input type='submit'
-                 value='Create'/>
-        </S.ButtonWrapper>
+        <S.Buttons>
+          <BackButton updateActiveView={props.updateActiveView}/>
+          <S.ButtonWrapper>
+            <input type='submit'
+                   value='Create'/>
+          </S.ButtonWrapper>
+        </S.Buttons>
       </S.ItemCreateForm>
   );
 }
