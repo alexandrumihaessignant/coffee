@@ -3,7 +3,7 @@ import Button from '../../../../atoms/Button';
 
 import * as S from './Preview.style';
 
-const Preview = (props) => {
+function Preview(props) {
 
   return (
       <S.Wrapper>

@@ -1,13 +1,21 @@
+import {useEffect, useState} from 'react';
+
 import Item from './support/Item';
 
 import * as S from './Grid.style';
 
-const Grid = (props) => {
+function Grid(props) {
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setItems(props.items);
+  }, [props.items]);
 
   return (
       <S.Wrapper>
         <S.Grid>
-          {props.items.map((item) => (
+          {items.map((item) => (
               <Item key={item.title}
                     title={item.title}
                     imgSrc={item.imgSrc}

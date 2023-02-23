@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import {useState} from 'react';
 
 import * as SInput from '../../../../atoms/Input.style';
 import * as SButtonWrapper from '../../../../atoms/Button.style';
@@ -11,52 +11,43 @@ const S = {
   ButtonWrapper: SButtonWrapper.ButtonWrapper
 };
 
-class Create extends Component {
+function Create(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   }
 
-  handleNameChange = (event) => {
-    this.setState({
-      name: event.target.value
-    });
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
   }
 
-  handleDescriptionChange = (event) => {
-    this.setState({
-      description: event.target.value
-    });
-  }
-
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    this.props.updateActiveView({
-      title: this.state.name,
-      description: this.state.description
+    props.updateActiveView({
+      title: name,
+      description: description
     })
   }
 
-  render() {
-    return (
-        <S.ItemCreateForm onSubmit={this.handleSubmit}>
-          <S.Input type='text'
-                   name='name'
-                   placeholder='Name'
-                   onChange={this.handleNameChange}/>
-          <S.Input type='text'
-                   name='description'
-                   placeholder='Description'
-                   onChange={this.handleDescriptionChange}/>
-          <S.ButtonWrapper>
-            <input type='submit'
-                   value='Create'/>
-          </S.ButtonWrapper>
-        </S.ItemCreateForm>
-    );
-  }
+  return (
+      <S.ItemCreateForm onSubmit={handleSubmit}>
+        <S.Input type='text'
+                 name='name'
+                 placeholder='Name'
+                 onChange={handleNameChange}/>
+        <S.Input type='text'
+                 name='description'
+                 placeholder='Description'
+                 onChange={handleDescriptionChange}/>
+        <S.ButtonWrapper>
+          <input type='submit'
+                 value='Create'/>
+        </S.ButtonWrapper>
+      </S.ItemCreateForm>
+  );
 }
 
 export default Create;

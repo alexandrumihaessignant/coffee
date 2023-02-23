@@ -7,7 +7,7 @@ const S = {
   Input: SInput.Input
 };
 
-const Search = (props) => {
+function Search(props) {
 
   const handleChange = (event) => {
     props.filterGrid({

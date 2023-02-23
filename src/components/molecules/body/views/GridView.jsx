@@ -1,14 +1,22 @@
 import Search from './grid/Search';
 import Grid from './grid/Grid';
 import CreateButton from './grid/CreateButton';
+import {useEffect, useState} from "react";
 
-const GridView = (props) => {
+function GridView(props) {
+
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setItems(props.items)
+  }, [props.items]);
+
 
   return (
       props.display
           ? <>
             <Search filterGrid={props.filterGrid}/>
-            <Grid items={props.items}
+            <Grid items={items}
                   updateActiveView={props.updateActiveView}/>
             <CreateButton updateActiveView={props.updateActiveView}/>
           </>

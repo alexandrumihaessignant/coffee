@@ -1,6 +1,6 @@
 import Preview from './preview/Preview';
 
-const PreviewView = (props) => {
+function PreviewView(props) {
 
   return (
       props.display

@@ -1,6 +1,6 @@
 import * as S from './Button.style';
 
-const Button = (props) => {
+function Button(props) {
 
   return (
       <S.ButtonWrapper>

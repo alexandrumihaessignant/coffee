@@ -1,6 +1,6 @@
 import Create from './create/Create';
 
-const CreateView = (props) => {
+function CreateView(props) {
 
   return (
       props.display

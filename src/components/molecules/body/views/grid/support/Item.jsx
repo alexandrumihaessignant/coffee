@@ -4,7 +4,7 @@ import {ActiveView} from '../../../../../../constants/ActiveView';
 
 import * as S from './Item.style';
 
-const Item = (props) => {
+function Item(props) {
 
   const onClick = (event) => {
     event.preventDefault();
