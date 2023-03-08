@@ -1,5 +1,5 @@
 const Mapper = {
-  HotCoffee: (json) => {
+  'hot-coffee': (json) => {
     return json.map(item => {
       return {
         title: item.title,
@@ -8,7 +8,7 @@ const Mapper = {
       }
     });
   },
-  IcedCoffee: (json) => {
+  'iced-coffee': (json) => {
     return json.map(item => {
       return {
         title: item.title,
@@ -17,7 +17,7 @@ const Mapper = {
       }
     });
   },
-  Deserts: (json) => {
+  'desserts': (json) => {
     return json.cakes.map(item => {
       return {
         title: item.title,

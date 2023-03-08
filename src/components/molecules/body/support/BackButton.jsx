@@ -1,18 +1,14 @@
-import Button from '../../../atoms/Button';
+import {useNavigate} from "react-router-dom";
+import Button from "../../../atoms/Button";
 
-import {ActiveView} from '../../../../constants/ActiveView';
+function BackButton() {
 
-function BackButton(props) {
+  const nav = useNavigate();
 
-  const onClick = (event) => {
-    event.preventDefault();
-    props.updateActiveView({
-      activeView: ActiveView.Grid,
-      previewTitle: null,
-      previewImgSrc: null,
-      previewDescription: null
-    });
-  }
+  const onClick = (e) => {
+    e.preventDefault();
+    nav(-1);
+  };
 
   return (
       <Button onClick={onClick}

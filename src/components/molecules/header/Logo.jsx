@@ -2,10 +2,10 @@ import * as S from './Logo.style';
 
 function Logo() {
   return (
-      <S.LogoWrapper>
+      <S.LogoWrapper to="/">
         <S.Logo/>
         <S.TitleWrapper>
-          <S.Title href='#'>Coffee Shop</S.Title>
+          <S.Title>Coffee Shop</S.Title>
         </S.TitleWrapper>
       </S.LogoWrapper>
   );

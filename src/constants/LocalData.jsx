@@ -1,5 +1,5 @@
 export const LocalData = {
-  icedCoffee: [
+  IcedCoffee: [
     {
       title: 'Iced Coffee',
       imgSrc: require('./../assets/iced-coffee.jpg')

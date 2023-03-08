@@ -1,7 +1,7 @@
-import BackButton from '../../support/BackButton';
-import Button from '../../../../atoms/Button';
+import Button from '../../../atoms/Button';
 
 import * as S from './Preview.style';
+import BackButton from "../support/BackButton";
 
 function Preview(props) {
 
@@ -23,7 +23,7 @@ function Preview(props) {
           </S.Content>
         </S.Preview>
         <S.Buttons>
-          <BackButton updateActiveView={props.updateActiveView}/>
+          <BackButton/>
           <Button title={'Edit'}/>
         </S.Buttons>
       </S.Wrapper>

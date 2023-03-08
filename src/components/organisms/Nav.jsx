@@ -5,7 +5,7 @@ import * as S from './Nav.style';
 function Nav(props) {
   return (
       <S.Nav>
-        <PagesLinks updateActiveCategory={props.updateActiveCategory}/>
+        <PagesLinks/>
       </S.Nav>
   );
 }

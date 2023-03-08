@@ -1,38 +1,27 @@
-import {ActiveCategory} from '../../../constants/ActiveCategory';
+import {Link} from 'react-router-dom';
+
+import {AppPaths} from "../../../constants/routing/AppRoutes";
 
 import * as S from './PagesLinks.style';
 
-function PagesLinks(props) {
-
-  const onClick = (event) => {
-    event.preventDefault();
-    const clickedCategory = event.target.innerText.replace(' ', '');
-    const newActiveCategory = getKeyByValue(ActiveCategory, clickedCategory);
-    props.updateActiveCategory({
-      activeCategory: newActiveCategory,
-    });
-  }
-
-  const getKeyByValue = (object, value) => {
-    return Object.keys(object).find(key => object[key] === value);
-  }
+function PagesLinks() {
 
   return (
     <S.PagesLinks>
         <li>
-          <a href='#'
-             onClick={onClick}>Hot Coffee
-          </a>
+          <Link to={AppPaths["hot-coffee"]}>
+            Hot Coffee
+          </Link>
         </li>
         <li>
-          <a href='#'
-             onClick={onClick}>Iced Coffee
-          </a>
+          <Link to={AppPaths["iced-coffee"]}>
+            Iced Coffee
+          </Link>
         </li>
         <li>
-          <a href='#'
-             onClick={onClick}>Deserts
-          </a>
+          <Link to={AppPaths["desserts"]}>
+            Desserts
+          </Link>
         </li>
     </S.PagesLinks>
   );

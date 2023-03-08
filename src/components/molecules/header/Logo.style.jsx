@@ -1,13 +1,15 @@
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
+
 
 import logoAsset from './../../../assets/logo.png'
 
-export const LogoWrapper = styled.div`
+export const LogoWrapper = styled(Link)`
   display: flex;
   flex-direction: column;
-`
+`;
 
-export const Logo = styled.a`
+export const Logo = styled.div`
   display: inline-block;
   align-self: center;
 
@@ -32,7 +34,7 @@ export const TitleWrapper = styled.div`
   justify-content: center;
 `
 
-export const Title = styled.a`
+export const Title = styled.p`
   align-self: center;
   margin: -8px 0 0 0;
 
