@@ -1,12 +1,14 @@
 import {useContext, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+
+import BackButton from '../support/BackButton';
+
+import {AppContext} from '../../../../services/AppContext';
+import {ActiveCategory} from '../../../../constants/ActiveCategory';
 
 import * as SMain from './Create.style';
 import * as SInput from '../../../atoms/Input.style';
 import * as SButtonWrapper from '../../../atoms/Button.style';
-import BackButton from "../support/BackButton";
-import {AppContext} from "../../../../services/AppContext";
-import {ActiveCategory} from "../../../../constants/ActiveCategory";
-import {useNavigate, useParams} from "react-router-dom";
 
 const S = {
   ItemCreateForm: SMain.ItemCreateForm,
@@ -20,9 +22,6 @@ function Create() {
   const {appCtx, setAppCtx} = useContext(AppContext);
   const nav = useNavigate();
   let {category} = useParams();
-
-  const activeCategory = category || ActiveCategory.HotCoffee;
-  const itemsFromCategory = appCtx.items[activeCategory];
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -44,7 +43,7 @@ function Create() {
       description: description
     });
     setAppCtx(tempContext);
-    nav("/"+ category);
+    nav('/' + category);
   }
 
   return (

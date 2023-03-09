@@ -1,9 +1,9 @@
 import {Outlet} from 'react-router-dom';
 
-import Header from "../components/organisms/Header";
-import Nav from "../components/organisms/Nav";
+import Header from '../components/organisms/Header';
+import Nav from '../components/organisms/Nav';
 
-import * as S from "./Root.style";
+import * as S from './Root.style';
 
 function Root() {
   return (
@@ -11,7 +11,7 @@ function Root() {
         <Header/>
         <Nav/>
         <S.Body>
-          <Outlet />
+          <Outlet/>
         </S.Body>
       </S.Root>
   );

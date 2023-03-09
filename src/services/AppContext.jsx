@@ -1,5 +1,6 @@
-import {createContext} from "react";
-import {LocalData} from "../constants/LocalData";
+import {createContext} from 'react';
+
+import {LocalData} from '../constants/LocalData';
 
 export const AppContext = createContext({
   activeItems: [],

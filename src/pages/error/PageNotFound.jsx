@@ -1,7 +1,7 @@
-import Header from "../../components/organisms/Header";
-import Nav from "../../components/organisms/Nav";
+import Header from '../../components/organisms/Header';
+import Nav from '../../components/organisms/Nav';
 
-import * as S from "../Root.style";
+import * as S from '../Root.style';
 
 function ItemNotFound() {
 

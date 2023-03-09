@@ -2,23 +2,23 @@ import './styles/index.css';
 import './styles/color-palette.css';
 import './styles/font-size.css';
 
-import {useEffect, useState} from "react";
+import {useEffect, useState} from 'react';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 import Root from './pages/Root';
-import GridPage from "./pages/item/GridPage";
-import PreviewPage from "./pages/item/PreviewPage";
-import ItemNotFound from "./pages/error/ItemNotFound";
-import CreatePage from "./pages/item/CreatePage";
+import PageNotFound from './pages/error/PageNotFound';
+import GridPage from './pages/item/GridPage';
+import PreviewPage from './pages/item/PreviewPage';
+import ItemNotFound from './pages/error/ItemNotFound';
+import CreatePage from './pages/item/CreatePage';
 
-import fetchItems from "./services/DataFetcher";
-import computeUniqueItems from "./util/ItemsUtils";
-import {ActiveCategory} from "./constants/ActiveCategory";
-import {LocalData} from "./constants/LocalData";
-import {AppContext} from "./services/AppContext";
-import {Endpoints} from "./constants/Endpoints";
-import {AppRoutes} from "./constants/routing/AppRoutes";
-import PageNotFound from "./pages/error/PageNotFound";
+import fetchItems from './services/DataFetcher';
+import computeUniqueItems from './util/ItemsUtils';
+import {AppContext} from './services/AppContext';
+import {ActiveCategory} from './constants/ActiveCategory';
+import {LocalData} from './constants/LocalData';
+import {Endpoints} from './constants/Endpoints';
+import {AppRoutes} from './constants/routing/AppRoutes';
 
 const router = createBrowserRouter([
   {
@@ -78,9 +78,9 @@ function App() {
 
   const updateAppContext = async (allItems) => {
     let tempContext = {...appCtx};
-    tempContext["items"][ActiveCategory.HotCoffee] = allItems[0];
-    tempContext["items"][ActiveCategory.IcedCoffee] = allItems[1];
-    tempContext["items"][ActiveCategory.Desserts] = allItems[2];
+    tempContext['items'][ActiveCategory.HotCoffee] = allItems[0];
+    tempContext['items'][ActiveCategory.IcedCoffee] = allItems[1];
+    tempContext['items'][ActiveCategory.Desserts] = allItems[2];
     setAppCtx(tempContext);
   }
 

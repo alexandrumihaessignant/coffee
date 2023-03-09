@@ -1,8 +1,8 @@
-import {useParams} from "react-router-dom";
+import {useParams} from 'react-router-dom';
 
 function ItemNotFound() {
 
-  let {category, itemTitle} = useParams();
+  let {category} = useParams();
 
   return (
       <>

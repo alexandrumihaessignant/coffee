@@ -1,10 +1,11 @@
-import {useContext, useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useContext, useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 
-import Preview from "../../components/molecules/body/preview/Preview";
-import {AppContext} from "../../services/AppContext";
-import {ActiveCategory} from "../../constants/ActiveCategory";
-import {AppPaths, AppRoutes} from "../../constants/routing/AppRoutes";
+import Preview from '../../components/molecules/body/preview/Preview';
+
+import {AppContext} from '../../services/AppContext';
+import {ActiveCategory} from '../../constants/ActiveCategory';
+import {AppPaths} from '../../constants/routing/AppRoutes';
 
 function PreviewPage() {
 
@@ -15,9 +16,9 @@ function PreviewPage() {
   const activeCategory = category || ActiveCategory.HotCoffee;
   const itemsFromCategory = appCtx.items[activeCategory];
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [imgSrc, setImgSrc] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [imgSrc, setImgSrc] = useState('');
 
   useEffect(() => {
     populatePageData();
@@ -33,7 +34,7 @@ function PreviewPage() {
       setDescription(item.description);
       setImgSrc(item.imgSrc);
     } else if (!itemsAreStillUninitialized()) {
-      nav("/" + activeCategory + AppPaths.itemNotFound);
+      nav('/' + activeCategory + AppPaths.itemNotFound);
     }
   }
 

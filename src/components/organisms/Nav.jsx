@@ -2,7 +2,7 @@ import PagesLinks from './../molecules/nav/PagesLinks';
 
 import * as S from './Nav.style';
 
-function Nav(props) {
+function Nav() {
   return (
       <S.Nav>
         <PagesLinks/>

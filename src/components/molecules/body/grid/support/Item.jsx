@@ -1,9 +1,10 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from 'react-router-dom';
 
 import Button from '../../../../atoms/Button';
 
+import {AppPaths, AppRoutes} from '../../../../../constants/routing/AppRoutes';
+
 import * as S from './Item.style';
-import {AppRoutes, AppPaths} from "../../../../../constants/routing/AppRoutes";
 
 function Item(props) {
 
@@ -13,8 +14,8 @@ function Item(props) {
   const onClick = (event) => {
     event.preventDefault();
     const url = category === undefined
-        ? AppRoutes.HotCoffee + AppPaths.preview + "/" + props.title
-        : "/" + category + AppPaths.preview + "/" + props.title;
+        ? AppRoutes.HotCoffee + AppPaths.preview + '/' + props.title
+        : '/' + category + AppPaths.preview + '/' + props.title;
     nav(url);
   }
 

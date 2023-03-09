@@ -1,7 +1,7 @@
 import Button from '../../../atoms/Button';
 
 import * as S from './Preview.style';
-import BackButton from "../support/BackButton";
+import BackButton from '../support/BackButton';
 
 function Preview(props) {
 
