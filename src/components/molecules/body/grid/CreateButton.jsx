@@ -1,8 +1,8 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from 'react-router-dom';
 
 import Button from '../../../atoms/Button';
 
-import {AppPaths, AppRoutes} from "../../../../constants/routing/AppRoutes";
+import {AppPaths, AppRoutes} from '../../../../constants/routing/AppRoutes';
 
 import * as S from './CreateButton.style';
 
@@ -13,8 +13,8 @@ function CreateButton() {
 
   const onNavigate = () => {
     const url = category === undefined
-        ? AppPaths["hot-coffee"] + AppRoutes.categoryCreatePath
-        : "/" + category + AppRoutes.categoryCreatePath;
+        ? AppPaths['hot-coffee'] + AppRoutes.categoryCreatePath
+        : '/' + category + AppRoutes.categoryCreatePath;
     nav(url);
   };
 

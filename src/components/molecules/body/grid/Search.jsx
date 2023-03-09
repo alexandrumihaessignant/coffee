@@ -1,10 +1,12 @@
-import * as SInput from '../../../atoms/Input.style';
+
+import {useContext} from 'react';
+import {useParams} from 'react-router-dom';
+
+import {AppContext} from '../../../../services/AppContext';
+import {ActiveCategory} from '../../../../constants/ActiveCategory';
 
 import * as SMain from './Search.style';
-import {useContext} from "react";
-import {AppContext} from "../../../../services/AppContext";
-import {useParams} from "react-router-dom";
-import {ActiveCategory} from "../../../../constants/ActiveCategory";
+import * as SInput from '../../../atoms/Input.style';
 
 const S = {
   Search: SMain.Search,
@@ -28,7 +30,7 @@ function Search() {
     });
 
     let tempContext = {...appCtx};
-    tempContext["activeItems"] = filteredItems;
+    tempContext['activeItems'] = filteredItems;
     setAppCtx(tempContext);
   };
 
