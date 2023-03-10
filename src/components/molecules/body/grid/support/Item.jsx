@@ -2,7 +2,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 
 import Button from '../../../../atoms/Button';
 
-import {AppPaths, AppRoutes} from '../../../../../constants/routing/AppRoutes';
+import {AppPaths} from '../../../../../constants/routing/AppRoutes';
 
 import * as S from './Item.style';
 
@@ -13,10 +13,12 @@ function Item(props) {
 
   const onClick = (event) => {
     event.preventDefault();
-    const url = category === undefined
-        ? AppRoutes.HotCoffee + AppPaths.preview + '/' + props.title
-        : '/' + category + AppPaths.preview + '/' + props.title;
-    nav(url);
+    const hotCoffeePreviewRoute = AppPaths['hot-coffee'] + AppPaths.preview + '/' + props.title;
+    const dynamicPreviewRoute =  '/' + category + AppPaths.preview + '/' + props.title;
+    const route = category === undefined
+        ? hotCoffeePreviewRoute
+        : dynamicPreviewRoute;
+    nav(route);
   }
 
   return (

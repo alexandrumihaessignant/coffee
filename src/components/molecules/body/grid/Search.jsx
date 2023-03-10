@@ -1,5 +1,5 @@
 
-import {useContext} from 'react';
+import {useContext, useEffect, useRef} from 'react';
 import {useParams} from 'react-router-dom';
 
 import {AppContext} from '../../../../services/AppContext';
@@ -17,27 +17,41 @@ function Search() {
 
   const { appCtx, setAppCtx } = useContext(AppContext);
   const {category} = useParams();
+  const input = useRef();
 
   const activeCategory = category || ActiveCategory.HotCoffee;
 
   const handleFilterGrid = (event) => {
     const filterText = event.target.value;
-    let filteredItems = [];
-    appCtx.items[activeCategory].forEach(item => {
-      if(item.title.toLowerCase().includes(filterText.toLowerCase())) {
-        filteredItems.push(item);
-      }
-    });
-
+    let filteredItems = computeFilteredItems(filterText);
     let tempContext = {...appCtx};
     tempContext['activeItems'] = filteredItems;
     setAppCtx(tempContext);
   };
 
+  const computeFilteredItems = (filterText) => {
+    let filteredItems = [];
+    appCtx.items[activeCategory].forEach(item => {
+      if (item.title.toLowerCase().includes(filterText.toLowerCase())) {
+        filteredItems.push(item);
+      }
+    });
+    return filteredItems;
+  }
+
+  useEffect(() => {
+    clearInputValue();
+  }, [category]);
+
+  const clearInputValue = () => {
+    input.current.value = '';
+  };
+
   return (
       <S.Search>
         <form>
-          <S.Input placeholder='Search by name'
+          <S.Input ref={input}
+                   placeholder='Search by name'
                    onChange={handleFilterGrid}/>
         </form>
       </S.Search>

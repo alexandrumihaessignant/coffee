@@ -8,19 +8,26 @@ import * as S from './CreateButton.style';
 
 function CreateButton() {
 
+  const hotCoffeeCreateRoute = AppPaths['hot-coffee'] + AppRoutes.categoryCreatePath;
+
   const nav = useNavigate();
   let {category} = useParams();
 
-  const onNavigate = () => {
-    const url = category === undefined
-        ? AppPaths['hot-coffee'] + AppRoutes.categoryCreatePath
-        : '/' + category + AppRoutes.categoryCreatePath;
-    nav(url);
+  const onClick = () => {
+    const route = buildRoute();
+    nav(route);
   };
+
+  const buildRoute = () => {
+    const dynamicCreateRoute = '/' + category + AppRoutes.categoryCreatePath;
+    return category === undefined
+        ? hotCoffeeCreateRoute
+        : dynamicCreateRoute;
+  }
 
   return (
       <S.Wrapper>
-        <Button onClick={onNavigate}
+        <Button onClick={onClick}
                 title={'Create'}/>
       </S.Wrapper>
   );
