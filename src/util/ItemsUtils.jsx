@@ -1,4 +1,4 @@
-const knownInvalidTitles = ['rem', 'Founder', 'string'];
+const knownInvalidTitles = ['rem', 'Founder', 'string', 'Aguapanela Coffee'];
 
 const computeUniqueItems = (existingItems, newItems) => {
   const items = existingItems.concat(newItems);

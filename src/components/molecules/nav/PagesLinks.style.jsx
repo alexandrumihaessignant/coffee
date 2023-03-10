@@ -23,8 +23,27 @@ export const PagesLinks = styled.ul`
       transition: all 0.2s;
 
       :hover {
-        color: var(--accent);
-        text-decoration: underline;
+        color: var(--accent-lighter);
+
+        :after {
+          transform: scaleX(1);
+        }
+      }
+
+      :after {
+        display:block;
+        content: '';
+        border-bottom: 1px solid var(--accent-lighter);
+        transform: scaleX(0);
+        transition: transform 250ms ease-in-out;
+      }
+    }
+    
+    a.selected {
+      color: var(--accent);
+
+      :hover {
+        color: var(--accent-lighter);
       }
     }
   }
