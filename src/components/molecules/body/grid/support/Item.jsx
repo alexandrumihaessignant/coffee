@@ -8,8 +8,16 @@ import * as S from './Item.style';
 
 function Item(props) {
 
+  const defaultImgSrc = require('./../../../../../assets/default-item.png');
+
   const nav = useNavigate();
   let {category} = useParams();
+
+  const buildImgSrc = () => {
+    return props.imgSrc === null
+        ? defaultImgSrc
+        : props.imgSrc;
+  }
 
   const onClick = (event) => {
     event.preventDefault();
@@ -23,7 +31,7 @@ function Item(props) {
 
   return (
       <S.Item>
-        <img src={props.imgSrc}>
+        <img src={buildImgSrc()}>
         </img>
         <Button onClick={onClick}
                 title={props.title}/>

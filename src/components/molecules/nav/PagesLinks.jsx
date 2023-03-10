@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import {AppPaths} from '../../../constants/routing/AppRoutes';
 
@@ -6,22 +6,29 @@ import * as S from './PagesLinks.style';
 
 function PagesLinks() {
 
+  function buildClassName() {
+    return ({isActive}) => (isActive ? 'selected' : '');
+  }
+
   return (
       <S.PagesLinks>
         <li>
-          <Link to={AppPaths['hot-coffee']}>
+          <NavLink to={AppPaths['hot-coffee']}
+                   className={buildClassName()}>
             Hot Coffee
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={AppPaths['iced-coffee']}>
+          <NavLink to={AppPaths['iced-coffee']}
+                   className={buildClassName()}>
             Iced Coffee
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={AppPaths['desserts']}>
+          <NavLink to={AppPaths['desserts']}
+                   className={buildClassName()}>
             Desserts
-          </Link>
+          </NavLink>
         </li>
       </S.PagesLinks>
   );

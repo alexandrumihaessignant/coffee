@@ -5,6 +5,14 @@ import BackButton from '../support/BackButton';
 
 function Preview(props) {
 
+  const defaultImgSrc = require('./../../../../assets/default-item.png');
+
+  const buildImgSrc = () => {
+    return props.imgSrc === null
+        ? defaultImgSrc
+        : props.imgSrc;
+  }
+
   function getDescription() {
     return props.description.length !== 0
         ? props.description
@@ -17,7 +25,7 @@ function Preview(props) {
           <p id='ItemPreviewTitle'>{props.title}
           </p>
           <S.Content>
-            <img src={props.imgSrc}/>
+            <img src={buildImgSrc()}/>
             <div>
               <p>Description:</p>
               <p>{getDescription()}</p>

@@ -28,7 +28,7 @@ function CreateButton() {
   return (
       <S.Wrapper>
         <Button onClick={onClick}
-                title={'Create'}/>
+                title={'+'}/>
       </S.Wrapper>
   );
 }
