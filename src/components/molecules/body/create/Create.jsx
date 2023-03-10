@@ -36,6 +36,11 @@ function Create() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    addNewItem();
+    nav('/' + category);
+  }
+
+  const addNewItem = () => {
     let tempContext = {...appCtx};
     tempContext.items[category].push({
       title: name,
@@ -43,7 +48,6 @@ function Create() {
       description: description
     });
     setAppCtx(tempContext);
-    nav('/' + category);
   }
 
   return (

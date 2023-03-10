@@ -5,6 +5,12 @@ import BackButton from '../support/BackButton';
 
 function Preview(props) {
 
+  function getDescription() {
+    return props.description.length !== 0
+        ? props.description
+        : `No description has been found.`;
+  }
+
   return (
       <S.Wrapper>
         <S.Preview>
@@ -14,11 +20,7 @@ function Preview(props) {
             <img src={props.imgSrc}/>
             <div>
               <p>Description:</p>
-              <p>{
-                props.description !== undefined
-                    ? props.description
-                    : `No description has been found.`
-              }</p>
+              <p>{getDescription()}</p>
             </div>
           </S.Content>
         </S.Preview>

@@ -10,17 +10,19 @@ function Grid() {
 
   const {appCtx} = useContext(AppContext);
 
+  function buildItems() {
+    return appCtx.activeItems.map((item) => (
+        <Item key={item.title}
+              title={item.title}
+              imgSrc={item.imgSrc}
+              description={item.description}></Item>
+    ));
+  }
+
   return (
       <S.Wrapper>
         <S.Grid>
-          {
-            appCtx.activeItems.map((item) => (
-                <Item key={item.title}
-                      title={item.title}
-                      imgSrc={item.imgSrc}
-                      description={item.description}></Item>
-            ))
-          }
+          {buildItems()}
         </S.Grid>
       </S.Wrapper>
   );

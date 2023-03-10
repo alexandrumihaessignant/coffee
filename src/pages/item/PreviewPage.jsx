@@ -25,16 +25,14 @@ function PreviewPage() {
   }, [itemsFromCategory]);
 
   const populatePageData = () => {
-    let optionalItem = appCtx
-        .items[category]
+    let optionalItem = appCtx.items[category]
     .filter((item) => isTheSearchedItem(item));
     if (optionalItem.length !== 0) {
       let item = optionalItem[0];
-      setTitle(item.title);
-      setDescription(item.description);
-      setImgSrc(item.imgSrc);
+      setState(item);
     } else if (!itemsAreStillUninitialized()) {
-      nav('/' + activeCategory + AppPaths.itemNotFound);
+      const pageNotFoundRoute = '/' + activeCategory + AppPaths.itemNotFound;
+      nav(pageNotFoundRoute);
     }
   }
 
@@ -44,6 +42,12 @@ function PreviewPage() {
 
   const itemsAreStillUninitialized = () => {
     return itemsFromCategory !== [];
+  }
+
+  const setState = (item) => {
+    setTitle(item.title);
+    setDescription(item.description);
+    setImgSrc(item.imgSrc);
   }
 
   return (
